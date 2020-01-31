@@ -22,40 +22,34 @@ public class Calculator1 {
             InputStream is = clienteSocket.getInputStream();
             OutputStream os = clienteSocket.getOutputStream();
             
-            byte[] lectura = new byte[250];
-            is.read(lectura);
-            System.out.println(new String(lectura));
-            
-            
-            System.out.println("Escogiendo tipo de operación");
-            String respuesta = leer.nextLine();
-            System.out.println("Enviando tipo de operación");
-            os.write(respuesta.getBytes());
-            
-            System.out.println("Recibiendo respuesta del servidor");
             byte[] mensaje = new byte[40];
             is.read(mensaje);
             System.out.println(new String(mensaje));
-            if(new String(mensaje).startsWith("Error")){
-                System.out.println("Desconectandose del servidor");
-            }
-            else{
-                respuesta = leer.nextLine();
-                System.out.println("Enviando primer operando");
-                os.write(respuesta.getBytes());
-                
-                System.out.println("Recibiendo respuesta del servidor");
-                is.read(mensaje);
-                
-                System.out.println(new String(mensaje));
-                respuesta = leer.nextLine();
-                System.out.println("Enviando segundo operando");
-                os.write(respuesta.getBytes());
-                
-                System.out.println("Recibiendo resultado de operación");
-                is.read(mensaje);
-                System.out.println(new String(mensaje));
-            }
+            
+            System.out.println("Enviando primer operando");
+            String envio = leer.nextLine();
+            os.write(envio.getBytes());
+            
+            mensaje = new byte[40];
+            is.read(mensaje);
+            System.out.println(new String(mensaje));
+            
+            System.out.println("Enviando segundo operando");
+            envio = leer.nextLine();
+            os.write(envio.getBytes());
+            
+            mensaje = new byte[200];
+            is.read(mensaje);
+            System.out.println(new String(mensaje));
+            
+            System.out.println("Enviando tipo de operación");
+            envio = leer.nextLine();
+            os.write(envio.getBytes());
+            
+            System.out.println("Recibiendo resultado de operación");
+            mensaje = new byte[40];
+            is.read(mensaje);
+            System.out.println(new String(mensaje));
             
             System.out.println("Cerrando el socket cliente");
             clienteSocket.close();
