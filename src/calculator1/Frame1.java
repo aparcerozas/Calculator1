@@ -14,6 +14,7 @@ import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -156,19 +157,21 @@ public class Frame1 extends javax.swing.JFrame {
 //            }
 //        });
         
-        Frame1 frame = new Frame1();
-        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        frame.setVisible(true);
+        
         
         try{
-            Scanner leer = new Scanner(System.in);
-            
+            String ip = JOptionPane.showInputDialog("Escriba la IP del servidor:");
+            int puerto = Integer.parseInt(JOptionPane.showInputDialog("Escriba el puerto de conexión:"));
             System.out.println("Creando socket cliente");
             Socket clienteSocket = new Socket();
             System.out.println("Estableciendo la conexión");
             
-            InetSocketAddress addr = new InetSocketAddress("192.168.0.1", 5555);
+            InetSocketAddress addr = new InetSocketAddress(ip, puerto);
             clienteSocket.connect(addr);
+            
+            Frame1 frame = new Frame1();
+            frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            frame.setVisible(true);
             
             is = clienteSocket.getInputStream();
             os = clienteSocket.getOutputStream();
